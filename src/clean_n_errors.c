@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 21:22:39 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/06 19:08:27 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 10:24:03 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static bool	max_int(char *str)
 void	exit_with_message(struct, char *str)
 {
 	printf("%s", string);
-	free struct 
+	clean_cave(cave); 
 	exit (1);
 }
 */
 
-static int strlen(char *str)
+static int t_strlen(char *str)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ bool	check_input(char **input)
 	i = 1;
 	while (input[i])
 	{
-		if(strlen(input[i]) > 4) // write strlen
+		if(t_strlen(input[i]) > 4) // write strlen
 		{
 			printf("We don't want to spend the whole day with this ... \n");
 			return (false);

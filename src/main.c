@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:45:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/06 20:31:53 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:11:51 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static void	cleanup(t_cave *cave)
 {
+	// clean_cave(cave);
 	pthread_mutex_destroy(&cave->start_lock);
 	pthread_cond_destroy(&cave->start_cond);
 }

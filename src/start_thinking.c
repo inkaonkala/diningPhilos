@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:40:52 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/27 21:23:39 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:56:12 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ Put down the forks.
 Sleep.
 */
 
-static long	current_time(void)
+long	current_time(void)
 {
 	struct  timeval	time;
 	long	millis;
 
 	gettimeofday(&time, NULL);
-	millis = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	millis = (int64_t)(time.tv_sec) * 1000 + (time.tv_usec / 1000);
 
-	return(millis);
+	return (millis);
 	
 }
 
@@ -48,47 +48,34 @@ static void	*routine(void *data)
 		pthread_cond_wait(&philo->cave->start_cond, &philo->cave->start_lock);
 	pthread_mutex_unlock(&philo->cave->start_lock);
 
+	if(philo->id_nmb == 1)
+		usleep(100);
+
 	while (!philo->cave->exit)
 	{
-		//THINKING
-		if(!philo->cave->exit)
-			printf("TIME %d is thinking\n", philo->id_nmb);
-		if (philo->id_nmb % 2 == 0)
-		{
-			mutex_handln(&philo->first_fork->fork, LOCK);
-			mutex_handln(&philo->second_fork->fork, LOCK);
-		}
-		else
-		{
-			mutex_handln(&philo->first_fork->fork, LOCK);
-			mutex_handln(&philo->second_fork->fork, LOCK);
-		}
-		//EATING
-		if(!philo->cave->exit)
-			printf("TIME %d is eating\n", philo->id_nmb);
-		philo->last_food_time = current_time();
-		usleep(philo->cave->time_to_eat); // * 1000); // CHECK
-		philo->meals_eatn++;
+		if(situation(philo))
+			thinking(philo);
 
-		//UNLOCK FORKS
-		mutex_handln(&philo->first_fork->fork, UNLOCK);
-		mutex_handln(&philo->second_fork->fork, UNLOCK);
-
-		if(philo->cave->exit)
-			break ;
-		//SLEEP
-		if(!philo->dead)
-			printf("TIME %d is sleeping\n", philo->id_nmb);
-		usleep(philo->cave->time_to_sleep); // * 1000);
+		if(situation(philo) && !philo->cave->exit)
+		{
+			if (pthread_mutex_lock(&philo->first_fork->fork) == 0)
+			{
+				if(pthread_mutex_lock(&philo->second_fork->fork) == 0)
+				{
+					eating(philo);
+					pthread_mutex_unlock(&philo->second_fork->fork);
+				}
+				pthread_mutex_unlock(&philo->first_fork->fork);
+			}
+		}
+		if(situation(philo) && !philo->cave->exit)
+			sleeping(philo);
 
 		if (philo->cave->limiter != -1 && philo->meals_eatn >= philo->cave->limiter)
 			break ;
-
-
 	}
 	return (NULL);
 }
-
 
 void	start_thinking(t_cave *cave)
 {
@@ -99,19 +86,34 @@ void	start_thinking(t_cave *cave)
 	cave->exit = false;
 
 	i = 0;
+	
+	while (i < cave->nbr_of_philo)
+	{
+		cave->philos[i].last_food_time = cave->start;
+		i++;
+	}
+	pthread_mutex_lock(&cave->start_lock);
+	cave->start_flag = false;
+
+
+
+	// CREATE PHILOS
+	i = 0;
 	while(i < cave->nbr_of_philo)
 	{
-		//THIS CRATES THREAD FOR EVERY PHILO
+//		cave->philos[i].last_food_time = current_time();	// this makes it infi_loop in second check 	
 		dprintf(2, "		first check\n");
 		thread_handl(&cave->philos[i].thread_id, routine, &cave->philos[i], CREATE);
 		i++;
 	}
+	
 	// START LOCK
-	pthread_mutex_lock(&cave->start_lock);
 	cave->start_flag = true;
 	pthread_cond_broadcast(&cave->start_cond); // signal philos to start
 	pthread_mutex_unlock(&cave->start_lock);
 
+
+	// CAVE LOOP
 	while (!cave->exit)
 	{
 		i = 0;
@@ -122,7 +124,6 @@ void	start_thinking(t_cave *cave)
 			if (last_meal_time >= cave->time_to_die)
 			{
 				printf("Philo %d is DEAD\n", cave->philos[i].id_nmb); // change to time X died
-				dprintf(2, "IN DEAD\n");
 				cave->exit = true;
 				//return ;
 				break ;
@@ -134,11 +135,72 @@ void	start_thinking(t_cave *cave)
 	i = 0;
 	while (i < cave->nbr_of_philo)
 	{
-		//join threadsi
+		if(cave->exit == true)
+			return ;
+		//join threads
 		dprintf(2, "		third check\n");
 		thread_handl(&cave->philos[i].thread_id, NULL, NULL, JOIN);
 		i++;
 	}
-	//clean()!
-	//clean_up(cave);
 }
+
+
+/*
+void	start_thinking(t_cave *cave)
+{
+	int		i;
+	long	last_meal_time;
+
+	cave->start = current_time();
+	cave->exit = false;
+
+	i = 0;
+	
+	// CREATE PHILOS
+	while(i < cave->nbr_of_philo)
+	{
+//		cave->philos[i].last_food_time = current_time();	// this makes it infi_loop in second check 	
+		dprintf(2, "		first check\n");
+		thread_handl(&cave->philos[i].thread_id, routine, &cave->philos[i], CREATE);
+		i++;
+	}
+	
+	// START LOCK
+	pthread_mutex_lock(&cave->start_lock);
+	cave->start_flag = true;
+	pthread_cond_broadcast(&cave->start_cond); // signal philos to start
+	pthread_mutex_unlock(&cave->start_lock);
+
+
+	// CAVE LOOP
+	while (!cave->exit)
+	{
+		i = 0;
+		while (i < cave->nbr_of_philo)
+		{
+			dprintf(2, "		second check\n");
+			last_meal_time = current_time() - cave->philos[i].last_food_time;
+			if (last_meal_time >= cave->time_to_die)
+			{
+				printf("Philo %d is DEAD\n", cave->philos[i].id_nmb); // change to time X died
+				cave->exit = true;
+				//return ;
+				break ;
+			}
+			i++;
+		}
+		usleep(1000); // the wait delay
+	}
+	i = 0;
+	while (i < cave->nbr_of_philo)
+	{
+		if(cave->exit == true)
+			return ;
+		//join threads
+		dprintf(2, "		third check\n");
+		thread_handl(&cave->philos[i].thread_id, NULL, NULL, JOIN);
+		i++;
+	}
+}
+
+*/
