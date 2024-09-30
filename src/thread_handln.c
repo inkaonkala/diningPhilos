@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:57:01 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/17 20:07:00 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 10:15:07 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static void	thread_errors(int stat, t_lockenum set)
 	else if(EDEADLK == stat)
 		printf("A deadlock found, thread calling thread\n");
 	else
+	{
 		printf("This should not come here\n");
 		printf("%u\n", set);
+	}
 	//clean_n_exit()
 	//exit(1);
 }

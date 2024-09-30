@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/06 20:37:02 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:06:55 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,28 @@ void	set_data(t_cave	*cave, char **input);
 
 void	set_struct(t_cave *cave);
 
-// mutex_handl.c
+// mutex_handl
 
 void	mutex_handln(t_mutex *mutex, t_lockenum lockset);
 
-// therad_hndl.c
+// therad_hndl
 
 void	thread_handl(pthread_t *thread, void *(*foo)(void *), void *data, t_lockenum set);
 
-// start_thinking.c
+// start_thinking
 
+long	current_time(void);
 void	start_thinking(t_cave *cave);
+
+// routine
+
+void	thinking(t_philo *philo);
+void	eating(t_philo *philo);
+void	sleeping(t_philo *philo);
+
+// situation_checker
+
+bool	situation(t_philo *philo);
 
 // clean_n_errors
 
@@ -115,4 +126,6 @@ void	*malloc_and_bu(size_t bytes);
 
 bool	is_number(char *str);
 
+//cleanup
+void	clean_cave(t_cave *cave);
 #endif

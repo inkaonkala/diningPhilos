@@ -6,12 +6,11 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 20:41:06 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/06 20:34:09 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 11:16:19 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
 
 static long	set_time(const char *input)
 {

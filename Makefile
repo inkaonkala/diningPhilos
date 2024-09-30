@@ -6,7 +6,7 @@
 #    By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/13 21:33:36 by iniska            #+#    #+#              #
-#    Updated: 2024/08/27 20:29:32 by iniska           ###   ########.fr        #
+#    Updated: 2024/09/30 10:52:42 by iniska           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME = philo
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCFILES 	= 	main.c parsing.c set_the_table.c thread_handln.c mutex_handln.c is_number.c start_thinking.c clean_n_errors.c
+SRCFILES 	= 	main.c parsing.c set_the_table.c thread_handln.c mutex_handln.c \
+				is_number.c start_thinking.c clean_n_errors.c cleanup.c \
+				situation_checker.c routine.c
 
 SRCDIR		=	src
 OBJDIR		=	objs
