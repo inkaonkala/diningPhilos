@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/30 11:06:55 by iniska           ###   ########.fr       */
+/*   Updated: 2024/09/30 20:58:05 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	thread_handl(pthread_t *thread, void *(*foo)(void *), void *data, t_lockenu
 
 // start_thinking
 
-long	current_time(void);
 void	start_thinking(t_cave *cave);
 
 // routine
@@ -112,9 +111,11 @@ void	start_thinking(t_cave *cave);
 void	thinking(t_philo *philo);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
+void	*routine(void *data);
 
 // situation_checker
 
+long	current_time(void);
 bool	situation(t_philo *philo);
 
 // clean_n_errors
