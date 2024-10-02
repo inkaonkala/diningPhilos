@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:53:04 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/30 21:03:11 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/02 20:53:19 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ void	eating(t_philo *philo)
 	
 		pthread_mutex_lock(&philo->first_fork->fork);
 		pthread_mutex_lock(&philo->second_fork->fork);
-		
+
+		pthread_mutex_lock(&philo->time_lock);
 		philo->last_food_time = current_time();
+		pthread_mutex_unlock(&philo->time_lock);
+		
 		usleep(philo->cave->time_to_eat * 1000); // * 1000); // CHECK
 		philo->meals_eatn++;
 

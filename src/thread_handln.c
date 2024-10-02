@@ -6,13 +6,13 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:57:01 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/30 10:15:07 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:49:34 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static void	thread_errors(int stat, t_lockenum set)
+void	thread_errors(int stat, t_lockenum set)
 {
 	if(stat == 0)
 		return ;
