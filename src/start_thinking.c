@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:40:52 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/02 20:51:09 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/03 09:40:22 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ static void	set_table(t_cave *cave)
 	{
 //		cave->philos[i].last_food_time = current_time();	// this makes it infi_loop in second check 	
 		dprintf(2, "		first check\n");
-		thread_handl(&cave->philos[i].thread_id, routine, &cave->philos[i], CREATE);
+		if (pthread_create(&cave->philos[i].thread_id, NULL, routine, &cave->philos[i]) != 0)
+		{
+			printf("Error in creating threads\n");
+			return ;
+		}
 		i++;
 	}
 	// START LOCK
@@ -80,7 +84,6 @@ void	start_thinking(t_cave *cave)
 	int		i;
 	int		status;
 	long	last_meal_time;
-	long	crnt_time;
 
 	cave->start = current_time();
 	cave->exit = false;
@@ -90,29 +93,18 @@ void	start_thinking(t_cave *cave)
 	
 	// START LOCK
 	cave->start_flag = true;
-	pthread_cond_broadcast(&cave->start_cond); // signal philos to start
+	//pthread_cond_broadcast(&cave->start_cond); // signal philos to start
 	pthread_mutex_unlock(&cave->start_lock);
-
-	// monitor LOOP
-	/*
-	if(!the_great_overseer(cave))
-	{
-		printf("Clean after overseer\n");
-		exit (1);
-	}
-	*/
 
 	while (!cave->exit)
 	{
 		i = 0;
-		dprintf(2, "number of philo is: %ld\n", cave->nbr_of_philo);
 		while (i < cave->nbr_of_philo)
 		{
 			//dprintf(2, "Philo %d last food time: %ld, current time: %ld\n", cave->philos[i].id_nmb, cave->philos[i].last_food_time, current_time());
 			//dprintf(2, "		second check\n");
-			crnt_time = current_time();
 			pthread_mutex_lock(&cave->philos[i].time_lock);
-			last_meal_time = crnt_time - cave->philos[i].last_food_time;
+			last_meal_time = current_time() - cave->philos[i].last_food_time;
 			pthread_mutex_unlock(&cave->philos[i].time_lock);
 
 			if (last_meal_time >= cave->time_to_die)
@@ -135,6 +127,7 @@ void	start_thinking(t_cave *cave)
 	i = 0;
 	while (i < cave->nbr_of_philo)
 	{
+		printf("in join threads\n");
 		//join threads
 		status = pthread_join(cave->philos[i].thread_id, NULL);
 //		thread_errors(status, JOIN);
