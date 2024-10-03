@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/30 11:06:55 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/02 20:33:29 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int		id_nmb;
-	int		meals_eatn;
-	long	last_food_time;
+	int				id_nmb;
+	int				meals_eatn;
+	pthread_mutex_t	time_lock;
+	long			last_food_time;
 
 	t_fork	*first_fork;
 	t_fork	*second_fork;
@@ -71,8 +72,11 @@ struct s_cave
 	t_fork	*forks;
 	t_philo	*philos;
 
+	int		full_philos;
+
 	t_mutex	start_lock;
 	pthread_cond_t start_cond;
+	pthread_mutex_t exit_mutex;
 	
 	long	nbr_of_philo;
 	long	time_to_die;
@@ -100,11 +104,11 @@ void	mutex_handln(t_mutex *mutex, t_lockenum lockset);
 
 // therad_hndl
 
+void	thread_errors(int stat, t_lockenum set);
 void	thread_handl(pthread_t *thread, void *(*foo)(void *), void *data, t_lockenum set);
 
 // start_thinking
 
-long	current_time(void);
 void	start_thinking(t_cave *cave);
 
 // routine
@@ -112,9 +116,12 @@ void	start_thinking(t_cave *cave);
 void	thinking(t_philo *philo);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
+void	*routine(void *data);
 
 // situation_checker
 
+//void	*the_great_overseer(t_cave *cave);
+long	current_time(void);
 bool	situation(t_philo *philo);
 
 // clean_n_errors
