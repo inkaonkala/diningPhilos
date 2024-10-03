@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:06:54 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/02 20:34:52 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/03 19:58:59 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	hand_the_forks(t_philo *philo, t_fork *fork, int position)
 		philo->second_fork = &fork[position];
 	}
 	else
-	{
+	{	
 		philo->second_fork = &fork[position];
 		philo->first_fork = &fork[(position + 1) % id];
 	}

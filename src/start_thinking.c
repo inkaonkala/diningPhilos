@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:40:52 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/03 09:40:22 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/03 20:20:10 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,13 @@ static void	start_lock(t_cave *cave)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&cave->start_lock);
 	while (i < cave->nbr_of_philo)
 	{
 		cave->philos[i].last_food_time = cave->start;
 		i++;
 	}
-	pthread_mutex_lock(&cave->start_lock);
+	//pthread_mutex_lock(&cave->start_lock);
 	cave->start_flag = false;
 }
 
@@ -89,12 +90,16 @@ void	start_thinking(t_cave *cave)
 	cave->exit = false;
 
 	start_lock(cave);
-	set_table(cave);
+	set_table(cave); // creates threads and starts the routine
 	
 	// START LOCK
-	cave->start_flag = true;
 	//pthread_cond_broadcast(&cave->start_cond); // signal philos to start
 	pthread_mutex_unlock(&cave->start_lock);
+	cave->start_flag = true;
+	pthread_cond_broadcast(&cave->start_cond);
+	pthread_mutex_unlock(&cave->start_lock);
+
+
 
 	while (!cave->exit)
 	{
@@ -118,9 +123,9 @@ void	start_thinking(t_cave *cave)
 				break ;
 			}
 			i++;
-			printf("i : %d\n", i);
 		}
-		usleep(1000); // the wait delay, bigger num beter cpu usage
+		usleep(100);  // the wait delay, bigger num beter cpu usage
+		// create better waiting()
 	}
 
 	// waiting loop
