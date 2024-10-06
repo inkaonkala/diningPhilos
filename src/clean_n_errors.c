@@ -6,36 +6,11 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 21:22:39 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/30 10:24:03 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/04 09:32:45 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-
-/*
-static bool	max_int(char *str)
-{
-	if(ft_strlen(str) > 10)
-		return(false);
-	if(strlen(str) == 10)
-	{
-		if((str[0] < '0' && str[0] > '2') || (str[1] < '0' && str[1] > '1') || ())
-			return (false);
-	}
-		
-
-}
-*/
-
-/*
-void	exit_with_message(struct, char *str)
-{
-	printf("%s", string);
-	clean_cave(cave); 
-	exit (1);
-}
-*/
 
 static int t_strlen(char *str)
 {
@@ -74,7 +49,7 @@ bool	check_input(char **input)
 	i = 1;
 	while (input[i])
 	{
-		if(t_strlen(input[i]) > 4) // write strlen
+		if(t_strlen(input[i]) > 4)
 		{
 			printf("We don't want to spend the whole day with this ... \n");
 			return (false);
@@ -83,3 +58,4 @@ bool	check_input(char **input)
 	}
 	return (true);
 }
+

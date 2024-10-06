@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/02 20:33:29 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/04 09:51:30 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ void	mutex_handln(t_mutex *mutex, t_lockenum lockset);
 void	thread_errors(int stat, t_lockenum set);
 void	thread_handl(pthread_t *thread, void *(*foo)(void *), void *data, t_lockenum set);
 
+// lonely_philo
+
+void	lonely_philo(t_cave * cave);
+
 // start_thinking
 
 void	start_thinking(t_cave *cave);
@@ -120,7 +124,7 @@ void	*routine(void *data);
 
 // situation_checker
 
-//void	*the_great_overseer(t_cave *cave);
+void	the_great_overseer(t_cave *cave);
 long	current_time(void);
 bool	situation(t_philo *philo);
 

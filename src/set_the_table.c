@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:06:54 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/03 19:58:59 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/05 10:18:23 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	hand_the_forks(t_philo *philo, t_fork *fork, int position)
 		philo->second_fork = &fork[position];
 		philo->first_fork = &fork[(position + 1) % id];
 	}
+	philo->last_food_time = 0;
 	dprintf(2, "Philo %d has first fork %d, and second fork %d\n", philo->id_nmb, philo->first_fork->id_fork, philo->second_fork->id_fork);
 }
 
@@ -40,7 +41,7 @@ static void	set_philos(t_cave *cave)
 	while(i < cave->nbr_of_philo)
 	{
 		philo = cave->philos + i;
-		philo->id_nmb = i + 1; //why +1, no philo 0
+		philo->id_nmb = i + 1;
 		philo->full = false;
 		philo->dead = false;
 		philo->meals_eatn = 0;
