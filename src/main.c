@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:45:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/09/30 11:11:51 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/06 20:33:32 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int arc, char **arv)
 	if (arc == 5 || arc == 6)
 	{
 		set_data(&cave, arv);
-		printf("Data has been set\n");
 		start_thinking(&cave);
 		cleanup(&cave);
 	}
