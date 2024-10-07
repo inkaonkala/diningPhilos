@@ -6,8 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:40:52 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/06 22:27:13 by iniska           ###   ########.fr       */
-/*   Updated: 2024/10/03 20:20:10 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:13:20 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +39,7 @@ static void	set_table(t_cave *cave)
 		}
 		pthread_mutex_unlock(&cave->ready_mutex);
 		usleep(100);
-	}
-	
+	}	
 	// START LOCK
 	pthread_mutex_lock(&cave->start_lock);
 	cave->start_flag = true;
@@ -55,7 +53,6 @@ static void	start_lock(t_cave *cave)
 	i = 0;
 	cave->start = current_time();
 	//pthread_mutex_lock(&cave->start_lock);
-
 	while (i < cave->nbr_of_philo)
 	{
 		cave->philos[i].last_food_time = cave->start;
