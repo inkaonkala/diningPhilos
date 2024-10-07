@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:06:54 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/06 22:18:23 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:26:30 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	hand_the_forks(t_philo *philo, t_fork *fork, int position)
 		philo->second_fork = &fork[position];
 		philo->first_fork = &fork[(position + 1) % id];
 	}
-//	philo->last_food_time = 0;
 }
 
 static void	set_philos(t_cave *cave)

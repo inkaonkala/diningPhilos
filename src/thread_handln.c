@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:57:01 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/02 15:49:34 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:25:51 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	thread_errors(int stat, t_lockenum set)
 		printf("This should not come here\n");
 		printf("%u\n", set);
 	}
-	//clean_n_exit()
-	//exit(1);
 }
 
 void	thread_handl(pthread_t *thread, void *(*foo)(void *), void *data, t_lockenum set)
@@ -48,6 +46,6 @@ void	thread_handl(pthread_t *thread, void *(*foo)(void *), void *data, t_lockenu
 	else
 	{
 		printf("False thread code\n");
-		exit(1);//clean!
+		exit(1);
 	}	
 }

@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:22:19 by iniska            #+#    #+#             */
-/*   Updated: 2024/08/27 19:30:54 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:27:16 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	mutex_error(int stat, t_lockenum set)
 		printf("Not enough memory to create another mutex\n");
 	else if (EBUSY == stat)
 		printf("Fork is locked\n");
-	//clean_n_exit();
 	exit(1);
 }
 
@@ -54,6 +53,4 @@ void	mutex_handln(t_mutex *mutex, t_lockenum lockset)
 		printf("wrong lockset!");
 		exit (1);
 	}
-	//pthread_mutex_init(mutex, NULL);
-	///pair it with pthread_mu8tex_destroy(t_mutex, NULL)
 }
