@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 11:22:57 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:42:06 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,13 @@ void	start_thinking(t_cave *cave);
 // routine
 
 void	thinking(t_philo *philo);
-void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	*routine(void *data);
+
+// eating
+
+void	eating(t_philo *philo);
+void	handle_forks(t_philo *philo);
 
 // situation_checker
 
