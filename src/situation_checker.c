@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:44:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 13:36:36 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:26:16 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	exit_check(t_cave *cave, int i)
 	time = current_time();
 	if (i == 1)
 	{
-		printf("%ld %d died\n", time, cave->philos[i].id_nmb); // change to time X died
+		printf("%ld %d died\n", time, cave->philos[i].id_nmb);
 		cave->exit = true;
 		pthread_mutex_unlock(&cave->exit_mutex);
 	}
@@ -70,7 +70,6 @@ void	the_great_overseer(t_cave *cave)
 
 		if (last_meal_time > cave->time_to_die)
 		{
-			printf("	last_meal_time: %ld \n	time_to_die: %ld\n", last_meal_time, cave->time_to_die);
 			exit_check(cave, 1);
 			break ;
 		}

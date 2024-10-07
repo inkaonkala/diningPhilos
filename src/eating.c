@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:39:58 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 13:40:35 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 13:55:41 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,4 @@ void	handle_forks(t_philo *philo)
 	eating(philo);
 	pthread_mutex_unlock(&philo->second_fork->fork);
 	pthread_mutex_unlock(&philo->first_fork->fork);
-	//pthread_mutex_unlock(&philo->second_fork->fork);
 }

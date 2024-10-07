@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 20:41:06 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 10:27:58 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:00:44 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ static void	time_settings(t_cave *cave, char **input)
 	cave->time_to_die = set_time(input[2]);
 	cave->time_to_eat = set_time(input[3]);
 	cave->time_to_sleep = set_time(input[4]);
-	printf("time to die is %ld: \n", cave->time_to_die);
 	if (cave->time_to_die < 60 || cave->time_to_eat < 60 || cave->time_to_sleep < 60)
 	{
 		printf("We need a bit more thime than that!\n");
-		//clean)struct();
 		exit (1);
 	}
 }
@@ -73,7 +71,6 @@ void	set_data(t_cave	*cave, char **input)
 	}
 	cave->nbr_of_philo = set_time(input[1]);
 	{
-		//make a checker here
 		if(cave->nbr_of_philo > 200)
 		{
 			printf("Too many thinkers\n");
@@ -87,7 +84,6 @@ void	set_data(t_cave	*cave, char **input)
 		if(cave->limiter <= 0)
 		{
 			printf("It is said, that philos have to eat at least once\n");
-			//clean_cave(cave);
 			exit(1);
 		}
 	}

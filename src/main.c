@@ -6,17 +6,15 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:45:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/06 20:33:32 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:10:29 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-// https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/
-
 static void	cleanup(t_cave *cave)
 {
-	// clean_cave(cave);
+	clean_cave(cave);
 	pthread_mutex_destroy(&cave->start_lock);
 	pthread_cond_destroy(&cave->start_cond);
 }

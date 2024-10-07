@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:53:04 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 13:42:47 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/07 14:25:05 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,8 @@ void	sleeping(t_philo *philo)
 	usleep(philo->cave->time_to_sleep * 1000);
 }
 
-void	*routine(void *data)
+static void	routine_lock(t_philo *philo)
 {
-	t_philo *philo;
-	bool	philo_is_dandy; 
-
-	philo = (t_philo *)data;
-	philo_is_dandy = situation(philo);
-
 	pthread_mutex_lock(&philo->cave->ready_mutex);
 	philo->cave->ready_count++;
 	pthread_mutex_unlock(&philo->cave->ready_mutex);
@@ -51,12 +45,21 @@ void	*routine(void *data)
 		pthread_mutex_lock(&philo->cave->start_lock);
 		if (philo->cave->start_flag)
 		{
-		//pthread_cond_wait(&philo->cave->start_cond, &philo->cave->start_lock);
 			pthread_mutex_unlock(&philo->cave->start_lock);
 			break ;
 		}
 		pthread_mutex_unlock(&philo->cave->start_lock);
 	}
+}
+
+void	*routine(void *data)
+{
+	t_philo *philo;
+	bool	philo_is_dandy; 
+
+	philo = (t_philo *)data;
+	philo_is_dandy = situation(philo);
+	routine_lock(philo);
 	while (!philo->cave->exit)
 	{
 		if ( philo_is_dandy && !philo->cave->exit)
