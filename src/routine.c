@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:53:04 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 11:42:59 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/03 20:20:51 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	thinking(t_philo *philo)
 
 	time = current_time();
 	if(!philo->cave->exit)
-		printf("%ld %d is thinking\n", time, philo->id_nmb);
-	// test if this makes run smoother
+     printf("%ld %d is thinking\n", time, philo->id_nmb);
 	if (philo->id_nmb % 2 != 0)
 		usleep(100);	
 }
@@ -50,25 +49,13 @@ void	eating(t_philo *philo)
 		philo->meals_eatn++;
 	}
 }
-//?? HERHE HERHEHR HERHEHR HERHEH
+
 static void	handle_forks(t_philo *philo)
 {
 	long	time;
 
 	time = current_time();
-	/*
-	if ((philo->id_nmb % 2) == 0)
-	{
-		pthread_mutex_lock(&philo->second_fork->fork);
-		pthread_mutex_lock(&philo->first_fork->fork);
-	}
-	else 
-	{
-		pthread_mutex_lock(&philo->first_fork->fork);
-		pthread_mutex_lock(&philo->second_fork->fork);
-	//	//pthread_mutex_lock(&philo->second_fork->fork);
-	}
-	*/
+
 	pthread_mutex_lock(&philo->first_fork->fork);
 	pthread_mutex_lock(&philo->second_fork->fork);
 	if(!philo->cave->exit)
@@ -78,7 +65,9 @@ static void	handle_forks(t_philo *philo)
 	pthread_mutex_unlock(&philo->first_fork->fork);
 	//pthread_mutex_unlock(&philo->second_fork->fork);
 }
+*/
 
+/*
 void	*routine(void *data)
 {
 	t_philo *philo;
@@ -120,6 +109,37 @@ void	*routine(void *data)
 			pthread_mutex_unlock(&philo->cave->exit_mutex);
 			break ;
 		}
+	}
+	return (NULL);
+}
+*/
+
+void	*routine(void *data)
+{
+	t_philo *philo;
+	bool	philo_is_dandy; 
+
+
+
+	philo = (t_philo *)data;
+	philo_is_dandy = situation(philo);
+
+	printf("in routine\n");
+	pthread_mutex_lock(&philo->cave->start_lock);
+	while (!philo->cave->start_flag)
+		pthread_cond_wait(&philo->cave->start_cond, &philo->cave->start_lock);
+	pthread_mutex_unlock(&philo->cave->start_lock);
+
+	while (!philo->cave->exit)
+	{
+		if ( philo_is_dandy && !philo->cave->exit)
+		{
+			thinking(philo);
+			handle_forks(philo);
+			sleeping(philo);
+		}
+		if (philo->cave->limiter != -1 && philo->meals_eatn >= philo->cave->limiter)
+		 break ;
 	}
 	return (NULL);
 }

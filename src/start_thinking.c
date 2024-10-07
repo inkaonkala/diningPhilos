@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:40:52 by iniska            #+#    #+#             */
 /*   Updated: 2024/10/06 22:27:13 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/03 20:20:10 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +55,7 @@ static void	start_lock(t_cave *cave)
 	i = 0;
 	cave->start = current_time();
 	//pthread_mutex_lock(&cave->start_lock);
+
 	while (i < cave->nbr_of_philo)
 	{
 		cave->philos[i].last_food_time = cave->start;
