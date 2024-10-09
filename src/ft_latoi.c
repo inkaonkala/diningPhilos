@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lonely_philo.c                                     :+:      :+:    :+:   */
+/*   ft_latoi.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 09:35:34 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:14:09 by iniska           ###   ########.fr       */
+/*   Created: 2024/10/09 10:08:27 by iniska            #+#    #+#             */
+/*   Updated: 2024/10/09 10:15:19 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	lonely_philo(t_cave *cave)
+long	ft_latoi(const char *str)
 {
-	long	time;
+	long	n;
+	int		t;
 
-	usleep(cave->time_to_die * 1000);
-	time = current_time();
-	printf("%ld 1 died\n", time);
-	clean_cave(cave);
-	exit (0);
+	n = 0;
+	t = 1;
+	while (*str == ' ' || *str == '\n' || *str == '\t' || *str == '\v'
+		|| *str == '\f' || *str == '\r')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			t = -1;
+		str++;
+	}
+	while ((*str >= '0' && *str <= '9'))
+	{
+		n *= 10;
+		n += *str - '0';
+		str++;
+	}
+	return (n * t);
 }

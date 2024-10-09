@@ -6,16 +6,11 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:22:19 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 14:27:16 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:13:18 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-// initialize
-// destroy
-// lock
-// unlock
 
 static void	mutex_error(int stat, t_lockenum set)
 {
@@ -23,10 +18,9 @@ static void	mutex_error(int stat, t_lockenum set)
 		return ;
 	if (EINVAL == stat && (set == LOCK || set == UNLOCK))
 		printf("The value specified by mutex is invalid\n");
-		//clean_n_exit
-	else if(EINVAL == stat && set == INIT)
+	else if (EINVAL == stat && set == INIT)
 		printf("The value specified by attr is invalid\n");
-	else if(EDEADLK == stat)
+	else if (EDEADLK == stat)
 		printf("Deadlock accured, blocked philo waiting for fork\n");
 	else if (EPERM == stat)
 		printf("Current philo does not hold a lock to fork\n");
@@ -49,7 +43,6 @@ void	mutex_handln(t_mutex *mutex, t_lockenum lockset)
 		mutex_error(pthread_mutex_destroy(mutex), lockset);
 	else
 	{
-		//clean_n_exit;
 		printf("wrong lockset!");
 		exit (1);
 	}

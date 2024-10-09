@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:44:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 14:26:16 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:04:01 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 long	current_time(void)
 {
-	struct  timeval	time;
-	long	millis;
+	struct timeval	time;
+	long			millis;
 
 	gettimeofday(&time, NULL);
-	millis = (int64_t)(time.tv_sec) * 1000 + (time.tv_usec / 1000); // this makes everyone live
+	millis = (int64_t)(time.tv_sec) * 1000
+		+ (time.tv_usec / 1000);
 	return (millis);
 }
 
@@ -46,7 +47,7 @@ static void	exit_check(t_cave *cave, int i)
 	else if (i == 2)
 	{
 		cave->full_philos++;
-		if(cave->full_philos == cave->nbr_of_philo)
+		if (cave->full_philos == cave->nbr_of_philo)
 		{
 			printf("Philo's are not hungy anymore\n");
 			cave->exit = true;
@@ -56,10 +57,10 @@ static void	exit_check(t_cave *cave, int i)
 
 void	the_great_overseer(t_cave *cave)
 {
-	int	i;
+	int		i;
 	long	last_meal_time;
 	long	time;
-	
+
 	i = 0;
 	time = current_time();
 	while (i < cave->nbr_of_philo)
@@ -67,18 +68,17 @@ void	the_great_overseer(t_cave *cave)
 		pthread_mutex_lock(&cave->philos[i].time_lock);
 		last_meal_time = time - cave->philos[i].last_food_time;
 		pthread_mutex_unlock(&cave->philos[i].time_lock);
-
 		if (last_meal_time > cave->time_to_die)
 		{
 			exit_check(cave, 1);
 			break ;
 		}
-		if (cave->limiter != -1 && cave->philos[i].meals_eatn >= cave->limiter)
+		if (cave->limiter != 0 && cave->philos[i].meals_eatn >= cave->limiter)
 		{
 			exit_check(cave, 2);
 			break ;
 		}
 		i++;
 	}
-	usleep(50000);
+	usleep(900);
 }

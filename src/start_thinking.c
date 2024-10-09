@@ -6,32 +6,40 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:40:52 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 14:03:13 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:28:23 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static void	set_table(t_cave *cave)
+static bool	spawn_philos(t_cave *cave)
 {
 	int	i;
 
 	i = 0;
-	if(cave->nbr_of_philo == 1)
-		lonely_philo(cave);
-	while(i < cave->nbr_of_philo)
+	while (i < cave->nbr_of_philo)
 	{	
-		if (pthread_create(&cave->philos[i].thread_id, NULL, routine, &cave->philos[i]) != 0)
+		if (pthread_create(&cave->philos[i].thread_id,
+				NULL, routine, &cave->philos[i]) != 0)
 		{
 			printf("Error in creating threads\n");
-			return ;
+			return (false);
 		}
 		i++;
 	}
+	return (true);
+}
+
+static void	set_table(t_cave *cave)
+{
+	if (cave->nbr_of_philo == 1)
+		lonely_philo(cave);
+	if (!spawn_philos(cave))
+		return ;
 	while (1)
 	{
 		pthread_mutex_lock(&cave->ready_mutex);
-		if(cave->ready_count == cave->nbr_of_philo)
+		if (cave->ready_count == cave->nbr_of_philo)
 		{
 			pthread_mutex_unlock(&cave->ready_mutex);
 			break ;
@@ -71,14 +79,11 @@ void	start_thinking(t_cave *cave)
 	cave->exit = false;
 	cave->ready_count = 0;
 	pthread_mutex_init(&cave->ready_mutex, NULL);
-
 	start_lock(cave);
 	set_table(cave);
 	pthread_mutex_unlock(&cave->start_lock);
 	cave->start_flag = true;
-
 	pthread_mutex_unlock(&cave->start_lock);
-
 	while (!cave->exit)
 		the_great_overseer(cave);
 	i = 0;
@@ -90,4 +95,3 @@ void	start_thinking(t_cave *cave)
 		i++;
 	}
 }
-

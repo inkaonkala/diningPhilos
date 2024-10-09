@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:39:58 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 13:55:41 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:14:35 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	eating(t_philo *philo)
 	long	time;
 
 	time = current_time();
-	if(!philo->cave->exit)
+	if (!philo->cave->exit)
 	{
 		pthread_mutex_lock(&philo->time_lock);
 		philo->last_food_time = time;
@@ -35,7 +35,7 @@ void	handle_forks(t_philo *philo)
 	time = current_time();
 	pthread_mutex_lock(&philo->first_fork->fork);
 	pthread_mutex_lock(&philo->second_fork->fork);
-	if(!philo->cave->exit)
+	if (!philo->cave->exit)
 		printf("%ld %d has taken a fork\n", time, philo->id_nmb);
 	eating(philo);
 	pthread_mutex_unlock(&philo->second_fork->fork);

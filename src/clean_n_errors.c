@@ -6,13 +6,13 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 21:22:39 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/06 20:31:53 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:24:03 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-static int t_strlen(char *str)
+static int	t_strlen(char *str)
 {
 	int	i;
 
@@ -28,10 +28,7 @@ void	*malloc_and_bu(size_t bytes)
 
 	mal = malloc(bytes);
 	if (mal == NULL)
-	{
-		//clean_up();
 		exit (1);
-	}
 	return (mal);
 }
 
@@ -42,14 +39,14 @@ bool	check_input(char **input)
 	i = 1;
 	while (input[i])
 	{
-		if(!is_number(input[i]))
+		if (!is_number(input[i]))
 			return (false);
 		i++;
 	}
 	i = 1;
 	while (input[i])
 	{
-		if(t_strlen(input[i]) > 4)
+		if (t_strlen(input[i]) > 4)
 		{
 			printf("We don't want to spend the whole day with this ... \n");
 			return (false);
@@ -58,4 +55,3 @@ bool	check_input(char **input)
 	}
 	return (true);
 }
-

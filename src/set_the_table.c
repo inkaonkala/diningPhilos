@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:06:54 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/07 14:26:30 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:05:03 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 static void	hand_the_forks(t_philo *philo, t_fork *fork, int position)
 {
-	int id;
+	int	id;
 
 	id = philo->cave->nbr_of_philo;
-
-	if((philo->id_nmb % 2) != 0)
+	if ((philo->id_nmb % 2) != 0)
 	{
 		philo->first_fork = &fork[(position + 1) % id];
 		philo->second_fork = &fork[position];
@@ -32,11 +31,11 @@ static void	hand_the_forks(t_philo *philo, t_fork *fork, int position)
 
 static void	set_philos(t_cave *cave)
 {
-	int	i;
-	t_philo *philo;
+	int		i;
+	t_philo	*philo;
 
 	i = 0;
-	while(i < cave->nbr_of_philo)
+	while (i < cave->nbr_of_philo)
 	{
 		philo = cave->philos + i;
 		philo->id_nmb = i + 1;
@@ -53,7 +52,7 @@ static void	set_philos(t_cave *cave)
 
 void	set_struct(t_cave *cave)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	cave->exit = false;
@@ -61,7 +60,7 @@ void	set_struct(t_cave *cave)
 	cave->forks = malloc_and_bu(sizeof(t_fork) * cave->nbr_of_philo);
 	pthread_mutex_init(&cave->exit_mutex, NULL);
 	cave->full_philos = 0;
-	while(i < cave->nbr_of_philo)
+	while (i < cave->nbr_of_philo)
 	{
 		mutex_handln(&cave->forks[i].fork, INIT);
 		cave->forks[i].id_fork = i;
