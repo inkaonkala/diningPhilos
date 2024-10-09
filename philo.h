@@ -6,12 +6,12 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:49:26 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 11:13:09 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PHILO
-# define PHILO
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -33,14 +33,14 @@ typedef enum e_lockenum
 	DETACH,
 }	t_lockenum;
 
-typedef pthread_mutex_t t_mutex;
-typedef	struct s_cave	t_cave;
+typedef pthread_mutex_t	t_mutex;
+typedef struct s_cave	t_cave;
 
 typedef struct s_fork
 {
 	t_mutex	fork;
 	int		id_fork;
-} t_fork;
+}	t_fork;
 
 typedef struct s_philo
 {
@@ -49,17 +49,17 @@ typedef struct s_philo
 	pthread_mutex_t	time_lock;
 	long			last_food_time;
 
-	t_fork	*first_fork;
-	t_fork	*second_fork;
+	t_fork			*first_fork;
+	t_fork			*second_fork;
 
-	bool	full;
-	bool	dead;
-	bool	is_ready;
+	bool			full;
+	bool			dead;
+	bool			is_ready;
 
-	pthread_t	thread_id;
-	t_cave		*cave;
+	pthread_t		thread_id;
+	t_cave			*cave;
 
-} t_philo;
+}	t_philo;
 
 struct s_cave
 {
@@ -72,7 +72,7 @@ struct s_cave
 	pthread_cond_t	start_cond;
 	pthread_mutex_t	ready_mutex;
 	pthread_mutex_t	exit_mutex;
-	
+
 	long			nbr_of_philo;
 	long			time_to_die;
 	long			time_to_eat;
@@ -99,7 +99,7 @@ void	mutex_handln(t_mutex *mutex, t_lockenum lockset);
 
 // lonely_philo
 
-void	lonely_philo(t_cave * cave);
+void	lonely_philo(t_cave *cave);
 
 // start_thinking
 
@@ -136,6 +136,5 @@ long	ft_latoi(const char *str);
 
 void	clean_cave(t_cave *cave);
 void	clean_cave_full(t_cave *cave);
-
 
 #endif
