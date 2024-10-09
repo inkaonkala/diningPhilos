@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:44:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:04:01 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:44:30 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	exit_check(t_cave *cave, int i)
 	{
 		printf("%ld %d died\n", time, cave->philos[i].id_nmb);
 		cave->exit = true;
+		cave->death = true;
 		pthread_mutex_unlock(&cave->exit_mutex);
 	}
 	else if (i == 2)
@@ -80,5 +81,5 @@ void	the_great_overseer(t_cave *cave)
 		}
 		i++;
 	}
-	usleep(900);
+	usleep(100);
 }

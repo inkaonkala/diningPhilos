@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:24:56 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:24:18 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:57:17 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	clean_cave(t_cave *cave)
 		free(cave->philos);
 		cave->philos = NULL;
 	}
+}
+
+void	clean_cave_full(t_cave *cave)
+{
+	free(cave->forks);
+	cave->forks = NULL;
+	free(cave->philos);
+	cave->philos = NULL;
 }

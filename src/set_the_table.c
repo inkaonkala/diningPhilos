@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 22:06:54 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:05:03 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:45:49 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	set_struct(t_cave *cave)
 
 	i = 0;
 	cave->exit = false;
+	cave->death = false;
 	cave->philos = malloc_and_bu(sizeof(t_philo) * cave->nbr_of_philo);
 	cave->forks = malloc_and_bu(sizeof(t_fork) * cave->nbr_of_philo);
 	pthread_mutex_init(&cave->exit_mutex, NULL);

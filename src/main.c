@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:45:53 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:13:51 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:50:11 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int	main(int arc, char **arv)
 	}
 	else
 		printf("You're giving me invalid info!");
+	if (cave.death)
+		clean_cave(&cave);
+	else
+		clean_cave_full(&cave);
 	write(1, "BYE!\n", 5);
 	return (0);
 }

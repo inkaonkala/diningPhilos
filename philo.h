@@ -6,7 +6,7 @@
 /*   By: iniska <iniska@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 21:43:44 by iniska            #+#    #+#             */
-/*   Updated: 2024/10/09 10:09:56 by iniska           ###   ########.fr       */
+/*   Updated: 2024/10/09 10:49:26 by iniska           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ struct s_cave
 
 	bool			start_flag;
 	bool			exit;
+	bool			death;
 } ;
 
 void	set_data(t_cave	*cave, char **input);
@@ -134,5 +135,7 @@ long	ft_latoi(const char *str);
 //cleanup
 
 void	clean_cave(t_cave *cave);
+void	clean_cave_full(t_cave *cave);
+
 
 #endif
